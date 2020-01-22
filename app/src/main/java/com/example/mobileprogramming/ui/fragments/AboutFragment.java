@@ -63,6 +63,7 @@ public class AboutFragment extends Fragment {
 
         Button button = getActivity().findViewById(R.id.addButton);
         Button countButton = getActivity().findViewById(R.id.countButton);
+        Button clearButton = getActivity().findViewById(R.id.clearButton);
 
         Spinner spinner = getActivity().findViewById(R.id.spinnerValue);
 
@@ -84,6 +85,11 @@ public class AboutFragment extends Fragment {
             Double index = glc.getGlycemicalLoad(selectedProductsArray, ingredients);
             glycIndex.setText(String.valueOf(Math.round(index)));
             Utils.setIndexColor(glycIndex, index);
+        });
+
+        clearButton.setOnClickListener(v -> {
+            ingredients.clear();
+            adapter.notifyDataSetChanged();
         });
 
     }
