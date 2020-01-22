@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mobileprogramming.R;
 import com.example.mobileprogramming.commons.Utils;
@@ -101,7 +102,13 @@ public class AboutFragment extends Fragment {
         });
 
         saveButton.setOnClickListener(v -> {
-            sharedPrefHelper.loadData(sharedPreferences);
+            sharedPrefHelper.saveData(sharedPreferences,
+                new Recipe(
+                    dishName.getText().toString(),
+                    Double.valueOf(glycIndex.getText().toString()),
+                    ingredients
+                )
+            );
         });
 
     }
