@@ -32,7 +32,7 @@ import androidx.fragment.app.Fragment;
 public class AboutFragment extends Fragment {
 
     private DBHelper dbHelper = new DBHelper();
-    private List<Product> products = new ArrayList<>();
+    private List<Product> productsArray = new ArrayList<>();
     private List<Ingredient> ingredients = new ArrayList<>();
     private List<String> spinnerArray = new ArrayList<>();
     private IngredientAdapter adapter;
@@ -58,21 +58,17 @@ public class AboutFragment extends Fragment {
 
         hideNavbarWhenKeyboardAppear(navBar, gram);
         bindElementWithListView(listView);
-        listenToButtonClick(gram, button);
+        listenToButtonClick(gram, button, spinner);
 
         dbHelper.getProducts(
             products -> {
                 products.forEach(
                     product -> {
-                        spinnerArray.add(product.getName());
-                        products.add(product);
+                        addDataToTempArrays(product);
                     });
-                spinnerAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, spinnerArray);
-                spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-                spinner.setAdapter(spinnerAdapter);
+                setDataForSpinner(spinner);
             }
         );
-
     }
 
     private void hideNavbarWhenKeyboardAppear(BottomNavigationView navBar, EditText gram) {
@@ -94,15 +90,22 @@ public class AboutFragment extends Fragment {
         listView.setAdapter(adapter);
     }
 
-    private void listenToButtonClick(EditText gram, Button button) {
+    private void listenToButtonClick(EditText gram, Button button, Spinner spinner) {
         button.setOnClickListener(v -> {
-            double weight = Double.parseDouble(gram.getText().toString());
+
+            long indexOfElement = spinner.getSelectedItemId();
+            String weight = gram.getText().toString();
+            String nameOfIngredient = spinner.getSelectedItem().toString();
+            String imgUri = productsArray.get((int)indexOfElement).getImgUrl();
+
             Ingredient ingredient = new Ingredient(
-                    "dasd","dad" , weight
+                    imgUri,nameOfIngredient , weight
             );
+
             ingredients.add(ingredient);
             adapter.notifyDataSetChanged();
             gram.setText("");
+
         });
     }
 
@@ -113,6 +116,17 @@ public class AboutFragment extends Fragment {
         DisplayMetrics dm = rootView.getResources().getDisplayMetrics();
         int heightDiff = rootView.getBottom() - r.bottom;
         return heightDiff > softKeyboardHeight * dm.density;
+    }
+
+    private void addDataToTempArrays(Product product) {
+        spinnerArray.add(product.getName());
+        productsArray.add(product);
+    }
+
+    private void setDataForSpinner(Spinner spinner) {
+        spinnerAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, spinnerArray);
+        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+        spinner.setAdapter(spinnerAdapter);
     }
 
 }
