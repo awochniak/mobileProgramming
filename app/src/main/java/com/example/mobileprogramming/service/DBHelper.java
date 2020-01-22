@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 
 public class DBHelper {
     public void getProducts(FirebaseDBCallback callback){
+        System.out.println("weszło");
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference ref = database.getReference(Config.PRODUCTS_COLLECTION_NAME);
 
