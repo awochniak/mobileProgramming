@@ -20,7 +20,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.ProductInfo" />
+        <activity android:name=".ui.activities.ProductInfo" />
     </application>
 
 </manifest>
