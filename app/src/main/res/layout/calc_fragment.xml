@@ -31,7 +31,7 @@
 
             <TextView
                 android:id="@+id/spinnerLabel"
-                android:layout_width="match_parent"
+                android:layout_width="160sp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
@@ -52,7 +52,7 @@
 
             <TextView
                 android:id="@+id/weightLabel"
-                android:layout_width="match_parent"
+                android:layout_width="160sp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
@@ -106,10 +106,9 @@
             android:layout_height="20sp" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/glycIndex"
             android:layout_width="match_parent"
             android:layout_height="100sp"
-            android:text="TextView"
             android:gravity="center"
             android:textStyle="bold"
             android:textSize="45sp"/>

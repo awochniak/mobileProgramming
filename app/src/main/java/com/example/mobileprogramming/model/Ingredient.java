@@ -4,9 +4,9 @@ public class Ingredient {
 
     private String imgUrl;
     private String name;
-    private String weight;
+    private double weight;
 
-    public Ingredient(String imgUrl, String name, String weight) {
+    public Ingredient(String imgUrl, String name, double weight) {
         this.imgUrl = imgUrl;
         this.name = name;
         this.weight = weight;
@@ -28,11 +28,11 @@ public class Ingredient {
         this.name = name;
     }
 
-    public String getWeight() {
+    public double getWeight() {
         return weight;
     }
 
-    public void setWeight(String weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
     }
 }
