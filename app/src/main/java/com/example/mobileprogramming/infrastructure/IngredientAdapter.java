@@ -32,7 +32,7 @@ public class IngredientAdapter extends ArrayAdapter<Ingredient> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         String name = getItem(position).getName();
-        double weight = getItem(position).getWeight();
+        String weight = getItem(position).getWeight();
         String imgUrl = getItem(position).getImgUrl();
 
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -43,7 +43,7 @@ public class IngredientAdapter extends ArrayAdapter<Ingredient> {
         ImageView imageView = convertView.findViewById(R.id.ingrImg);
 
         title.setText(name);
-        weightOfProduct.setText(String.valueOf(weight));
+        weightOfProduct.setText(weight);
         Picasso.get().load(imgUrl).into(imageView);
 
         return convertView;
