@@ -4,10 +4,12 @@ import java.util.List;
 
 public class Recipe {
     private String name;
+    private double index;
     private List<Ingredient> ingredientList;
 
-    public Recipe(String name, List<Ingredient> ingredientList) {
+    public Recipe(String name, double index, List<Ingredient> ingredientList) {
         this.name = name;
+        this.index = index;
         this.ingredientList = ingredientList;
     }
 
@@ -17,6 +19,14 @@ public class Recipe {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public double getIndex() {
+        return index;
+    }
+
+    public void setIndex(double index) {
+        this.index = index;
     }
 
     public List<Ingredient> getIngredientList() {

@@ -1,5 +1,7 @@
 package com.example.mobileprogramming.ui.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -17,7 +19,10 @@ import android.widget.TextView;
 
 import com.example.mobileprogramming.R;
 import com.example.mobileprogramming.commons.Utils;
+import com.example.mobileprogramming.config.Config;
 import com.example.mobileprogramming.infrastructure.GlycemicalLoadCalc;
+import com.example.mobileprogramming.model.Recipe;
+import com.example.mobileprogramming.service.SharedPrefHelper;
 import com.example.mobileprogramming.ui.adapters.IngredientAdapter;
 import com.example.mobileprogramming.model.Ingredient;
 import com.example.mobileprogramming.model.Product;
@@ -34,6 +39,7 @@ public class AboutFragment extends Fragment {
 
     private GlycemicalLoadCalc glc = new GlycemicalLoadCalc();
     private DBHelper dbHelper = new DBHelper();
+    private SharedPrefHelper sharedPrefHelper = new SharedPrefHelper();
 
     private List<Product> productsArray = new ArrayList<>();
     private List<Product> selectedProductsArray = new ArrayList<>();
@@ -54,6 +60,7 @@ public class AboutFragment extends Fragment {
 
         BottomNavigationView navBar = getActivity().findViewById(R.id.bottom_navigation);
         ListView listView = getActivity().findViewById(R.id.ingrListView);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Config.SP_TAG, Context.MODE_PRIVATE);
 
         EditText gram = getActivity().findViewById(R.id.weightValue);
         EditText dishName = getActivity().findViewById(R.id.dishValue);
@@ -64,6 +71,7 @@ public class AboutFragment extends Fragment {
         Button button = getActivity().findViewById(R.id.addButton);
         Button countButton = getActivity().findViewById(R.id.countButton);
         Button clearButton = getActivity().findViewById(R.id.clearButton);
+        Button saveButton = getActivity().findViewById(R.id.saveButton);
 
         Spinner spinner = getActivity().findViewById(R.id.spinnerValue);
 
@@ -90,6 +98,10 @@ public class AboutFragment extends Fragment {
         clearButton.setOnClickListener(v -> {
             ingredients.clear();
             adapter.notifyDataSetChanged();
+        });
+
+        saveButton.setOnClickListener(v -> {
+            sharedPrefHelper.loadData(sharedPreferences);
         });
 
     }
