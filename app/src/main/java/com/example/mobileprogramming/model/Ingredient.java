@@ -1,6 +1,8 @@
 package com.example.mobileprogramming.model;
 
-public class Ingredient {
+import java.io.Serializable;
+
+public class Ingredient implements Serializable {
 
     private String imgUrl;
     private String name;

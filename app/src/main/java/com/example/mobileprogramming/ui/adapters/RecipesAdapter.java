@@ -1,7 +1,6 @@
 package com.example.mobileprogramming.ui.adapters;
 
 import android.content.Context;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,20 +9,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mobileprogramming.R;
-import com.example.mobileprogramming.model.Product;
+import com.example.mobileprogramming.model.Recipe;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-
-public class ProductsAdapter extends ArrayAdapter<Product> {
+public class RecipesAdapter extends ArrayAdapter<Recipe> {
 
     private Context context;
     int resource;
 
-    public ProductsAdapter(Context context, int resource, List<Product> objects) {
+    public RecipesAdapter(Context context, int resource, List<Recipe> objects) {
         super(context, resource, objects);
         this.context = context;
         this.resource = resource;
@@ -33,21 +29,17 @@ public class ProductsAdapter extends ArrayAdapter<Product> {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         String name = getItem(position).getName();
-        int glycemIndex = getItem(position).getGlycemIndex();
-        String imgUrl = getItem(position).getImgUrl();
+        double glycemicIndex = getItem(position).getIndex();
 
         LayoutInflater inflater = LayoutInflater.from(context);
         convertView = inflater.inflate(resource, parent, false);
 
-        TextView title = convertView.findViewById(R.id.prodTit);
-        TextView index = convertView.findViewById(R.id.prodInd);
-        ImageView imageView = convertView.findViewById(R.id.prodImg);
+        TextView title = convertView.findViewById(R.id.recTitle);
+        TextView index = convertView.findViewById(R.id.recIndex);
 
         title.setText(name);
-        index.setText(String.valueOf(glycemIndex));
-        Picasso.get().load(imgUrl).into(imageView);
+        index.setText(String.valueOf(glycemicIndex));
 
         return convertView;
     }
 }
-

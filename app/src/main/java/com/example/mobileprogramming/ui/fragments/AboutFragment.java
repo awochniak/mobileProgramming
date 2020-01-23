@@ -105,7 +105,7 @@ public class AboutFragment extends Fragment {
             sharedPrefHelper.saveData(sharedPreferences,
                 new Recipe(
                     dishName.getText().toString(),
-                    Double.valueOf(glycIndex.getText().toString()),
+                    Integer.parseInt(glycIndex.getText().toString()),
                     ingredients
                 )
             );
