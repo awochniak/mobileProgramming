@@ -1,0 +1,243 @@
+package com.example.mobileprogramming.ui.fragments;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Rect;
+import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.view.inputmethod.EditorInfo;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.mobileprogramming.R;
+import com.example.mobileprogramming.commons.Utils;
+import com.example.mobileprogramming.config.Config;
+import com.example.mobileprogramming.infrastructure.GlycemicalLoadCalc;
+import com.example.mobileprogramming.model.Recipe;
+import com.example.mobileprogramming.service.SharedPrefHelper;
+import com.example.mobileprogramming.ui.adapters.IngredientAdapter;
+import com.example.mobileprogramming.model.Ingredient;
+import com.example.mobileprogramming.model.Product;
+import com.example.mobileprogramming.service.DBHelper;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+import androidx.fragment.app.Fragment;
+
+public class CalcFragment extends Fragment {
+
+    private GlycemicalLoadCalc glc = new GlycemicalLoadCalc();
+    private DBHelper dbHelper = new DBHelper();
+    private SharedPrefHelper sharedPrefHelper = new SharedPrefHelper();
+
+    private List<Product> productsArray = new ArrayList<>();
+    private List<Product> selectedProductsArray = new ArrayList<>();
+    private List<Ingredient> ingredients = new ArrayList<>();
+    private List<String> spinnerArray = new ArrayList<>();
+
+    private double index = -1;
+
+    private IngredientAdapter adapter;
+    private ArrayAdapter<String> spinnerAdapter;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.calc_fragment, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        BottomNavigationView navBar = getActivity().findViewById(R.id.bottom_navigation);
+        ListView listView = getActivity().findViewById(R.id.ingrListView);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Config.SP_TAG, Context.MODE_PRIVATE);
+
+        EditText gram = getActivity().findViewById(R.id.weightValue);
+        EditText dishName = getActivity().findViewById(R.id.dishValue);
+
+        TextView glycIndex = getActivity().findViewById(R.id.glycIndex);
+
+        Button addButton = getActivity().findViewById(R.id.addButton);
+        Button countButton = getActivity().findViewById(R.id.countButton);
+        Button clearButton = getActivity().findViewById(R.id.clearButton);
+        Button saveButton = getActivity().findViewById(R.id.saveButton);
+
+        Spinner spinner = getActivity().findViewById(R.id.spinnerValue);
+
+        hideNavbarWhenKeyboardAppear(navBar, gram);
+        bindElementWithListView(listView);
+        listenToButtonClick(gram, addButton, spinner);
+
+        addButton.setEnabled(false);
+        saveButton.setEnabled(false);
+
+        gram.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String et = gram.getText().toString();
+                addButton.setEnabled(!et.isEmpty());
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+
+            @Override
+            public void afterTextChanged(Editable editable) { }
+        });
+
+        dishName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String et = dishName.getText().toString();
+                saveButton.setEnabled(!et.isEmpty() && !ingredients.isEmpty() && index != -1 );
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
+
+            @Override
+            public void afterTextChanged(Editable editable) { }
+        });
+
+        glycIndex.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String et = dishName.getText().toString();
+                saveButton.setEnabled(!et.isEmpty() && !ingredients.isEmpty() && index != -1);
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+
+            @Override
+            public void afterTextChanged(Editable editable) { }
+        });
+
+        dbHelper.getProducts(
+            products -> {
+                products.forEach(
+                    product -> {
+                        addDataToTempArrays(product);
+                    });
+                setDataForSpinner(spinner);
+            }
+        );
+
+        countButton.setOnClickListener(v -> {
+            index = glc.getGlycemicalLoad(selectedProductsArray, ingredients);
+            glycIndex.setText(String.valueOf(Math.round(index)));
+            Utils.setIndexColor(glycIndex, index);
+        });
+
+        clearButton.setOnClickListener(v -> {
+            ingredients.clear();
+            adapter.notifyDataSetChanged();
+        });
+
+        saveButton.setOnClickListener(v -> {
+            sharedPrefHelper.saveData(sharedPreferences,
+                new Recipe(
+                    dishName.getText().toString(),
+                    Integer.parseInt(glycIndex.getText().toString()),
+                    ingredients
+                )
+            );
+
+            ingredients.clear();
+            adapter.notifyDataSetChanged();
+            glycIndex.setText("");
+            dishName.setText("");
+
+            Toast.makeText(getContext(), "Poprawnie zapisano danie", Toast.LENGTH_SHORT).show();
+        });
+
+    }
+
+    private void hideNavbarWhenKeyboardAppear(BottomNavigationView navBar, EditText gram) {
+        gram.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        gram.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                if (keyboardShown(gram.getRootView())) {
+                    navBar.setVisibility(View.GONE);
+                } else {
+                    navBar.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+    }
+
+    private void bindElementWithListView(ListView listView) {
+        adapter = new IngredientAdapter(getContext(), R.layout.ingredient, ingredients);
+        listView.setAdapter(adapter);
+    }
+
+    private void listenToButtonClick(EditText gram, Button button, Spinner spinner) {
+        button.setOnClickListener(v -> {
+
+            long indexOfElement = spinner.getSelectedItemId();
+            double weight = Double.valueOf(gram.getText().toString());
+            String nameOfIngredient = spinner.getSelectedItem().toString();
+            String imgUri = productsArray.get((int)indexOfElement).getImgUrl();
+
+            Ingredient ingredient = new Ingredient(
+                    imgUri,nameOfIngredient,weight
+            );
+
+            Product product =
+                    new Product(
+                        productsArray.get((int)indexOfElement).getName(),
+                        productsArray.get((int)indexOfElement).getType(),
+                        productsArray.get((int)indexOfElement).getCarbohydrates(),
+                        productsArray.get((int)indexOfElement).getFibre(),
+                        productsArray.get((int)indexOfElement).getGlycemIndex(),
+                        productsArray.get((int)indexOfElement).getImgUrl()
+                    );
+
+            ingredients.add(ingredient);
+            selectedProductsArray.add(product);
+            adapter.notifyDataSetChanged();
+            gram.setText("");
+
+        });
+    }
+
+    private boolean keyboardShown(View rootView) {
+        final int softKeyboardHeight = 100;
+        Rect r = new Rect();
+        rootView.getWindowVisibleDisplayFrame(r);
+        DisplayMetrics dm = rootView.getResources().getDisplayMetrics();
+        int heightDiff = rootView.getBottom() - r.bottom;
+        return heightDiff > softKeyboardHeight * dm.density;
+    }
+
+    private void addDataToTempArrays(Product product) {
+        spinnerArray.add(product.getName());
+        productsArray.add(product);
+    }
+
+    private void setDataForSpinner(Spinner spinner) {
+        if(getContext() != null){
+            spinnerAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, spinnerArray);
+            spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+            spinner.setAdapter(spinnerAdapter);
+        }
+    }
+
+}

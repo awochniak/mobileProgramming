@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView android:layout_height="match_parent" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView">
+
+    <LinearLayout
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        >
+
+        <TextView
+            android:id="@+id/calcTitle"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:text="OBLICZ ŁADUNEK GLIKEMICZNY"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"/>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="30sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/spinnerLabel"
+                android:layout_width="160sp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="Produkt:"
+                android:textColor="@color/colorPrimary"/>
+
+            <Spinner
+                android:id="@+id/spinnerValue"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:textColor="@color/colorPrimary"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/weightLabel"
+                android:layout_width="160sp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="Gramatura:"
+                android:textColor="@color/colorPrimary"/>
+
+            <EditText
+                android:focusable="true"
+                android:focusableInTouchMode ="true"
+                android:id="@+id/weightValue"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="numberDecimal"
+                android:backgroundTint="@color/edit_text_colors"
+                android:textColor="@color/colorPrimary"
+                />
+
+        </LinearLayout>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="20sp" />
+
+        <Button
+            android:textColor="#FFFFFF"
+
+            android:id="@+id/addButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dodaj do listy"
+            android:background="@color/button"/>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20sp" />
+
+        <ListView
+            android:id="@+id/ingrListView"
+            android:layout_width="match_parent"
+            android:layout_height="150sp">
+
+        </ListView>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="20sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <Button
+                android:textColor="#FFFFFF"
+                android:id="@+id/clearButton"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Wyczyść"
+                android:background="@color/button"
+                android:layout_marginRight="15dp"
+                />
+
+            <Button
+                android:textColor="#FFFFFF"
+                android:id="@+id/countButton"
+                android:layout_width="228dp"
+                android:layout_height="wrap_content"
+                android:text="Oblicz"
+                android:background="@color/button"
+                />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20sp" />
+
+        <TextView
+            android:id="@+id/glycIndex"
+            android:layout_width="match_parent"
+            android:layout_height="100sp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textSize="45sp"/>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40sp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/dishName"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="Podaj nazwę dania:"
+                android:textColor="@color/colorPrimary"/>
+
+            <EditText
+                android:focusable="true"
+                android:focusableInTouchMode ="true"
+                android:id="@+id/dishValue"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:backgroundTint="@color/edit_text_colors"
+                android:textColor="@color/colorPrimary"
+                />
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20sp" />
+
+        <Button
+            android:textColor="#FFFFFF"
+            android:id="@+id/saveButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Zapisz danie"
+            android:background="@color/button"/>
+
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "58965259394",
+    "firebase_url": "https://glycemic-d09b4.firebaseio.com",
+    "project_id": "glycemic-d09b4",
+    "storage_bucket": "glycemic-d09b4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:58965259394:android:70a3ef7a3c7ddac226709b",
+        "android_client_info": {
+          "package_name": "com.example.mobileprogramming"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "58965259394-71625ltkhrq1qukp47puni3o3jk9cruc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.mobileprogramming",
+            "certificate_hash": "3547177baffacfe40a27ca978451f0c22fbbfa7a"
+          }
+        },
+        {
+          "client_id": "58965259394-k98f544eqhlfnl6a9nm89op5rj4sptnn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBKdjKBYgmvVBrSW0lRoMQtVZtH7B1UOk4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "58965259394-k98f544eqhlfnl6a9nm89op5rj4sptnn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

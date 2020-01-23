@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginRight="25sp"
+    android:layout_marginLeft="25sp">
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+
+    <TextView
+        android:id="@+id/singleRecipeName"
+        android:layout_width="match_parent"
+        android:layout_height="62dp"
+        android:gravity="center"
+        android:text="Tytuł"
+        android:textStyle="bold"
+        android:textSize="30sp"
+        android:textColor="@color/colorPrimary"
+        />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/singleRecipeIndexLabel"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="Indeks glikemiczny"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"/>
+
+        <TextView
+            android:id="@+id/singleRecipeIndexValue"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="indeks glikemiczny"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"/>
+
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="484dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/ingredientsLabel"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="Lista składników"
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"/>
+
+        <ListView
+            android:id="@+id/ingredientsListView"
+            android:layout_width="match_parent"
+            android:layout_height="436dp" />
+
+    </LinearLayout>
+
+
+</LinearLayout>
