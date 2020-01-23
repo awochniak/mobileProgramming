@@ -1,5 +1,7 @@
 package com.example.mobileprogramming.ui.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -14,9 +16,14 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mobileprogramming.R;
+import com.example.mobileprogramming.commons.Utils;
+import com.example.mobileprogramming.config.Config;
 import com.example.mobileprogramming.infrastructure.GlycemicalLoadCalc;
+import com.example.mobileprogramming.model.Recipe;
+import com.example.mobileprogramming.service.SharedPrefHelper;
 import com.example.mobileprogramming.ui.adapters.IngredientAdapter;
 import com.example.mobileprogramming.model.Ingredient;
 import com.example.mobileprogramming.model.Product;
@@ -33,9 +40,13 @@ public class AboutFragment extends Fragment {
 
     private GlycemicalLoadCalc glc = new GlycemicalLoadCalc();
     private DBHelper dbHelper = new DBHelper();
+    private SharedPrefHelper sharedPrefHelper = new SharedPrefHelper();
+
     private List<Product> productsArray = new ArrayList<>();
+    private List<Product> selectedProductsArray = new ArrayList<>();
     private List<Ingredient> ingredients = new ArrayList<>();
     private List<String> spinnerArray = new ArrayList<>();
+
     private IngredientAdapter adapter;
     private ArrayAdapter<String> spinnerAdapter;
 
@@ -49,13 +60,20 @@ public class AboutFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         BottomNavigationView navBar = getActivity().findViewById(R.id.bottom_navigation);
-
         ListView listView = getActivity().findViewById(R.id.ingrListView);
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Config.SP_TAG, Context.MODE_PRIVATE);
+
         EditText gram = getActivity().findViewById(R.id.weightValue);
         EditText dishName = getActivity().findViewById(R.id.dishValue);
+
         TextView title = getActivity().findViewById(R.id.dishName);
+        TextView glycIndex = getActivity().findViewById(R.id.glycIndex);
+
         Button button = getActivity().findViewById(R.id.addButton);
         Button countButton = getActivity().findViewById(R.id.countButton);
+        Button clearButton = getActivity().findViewById(R.id.clearButton);
+        Button saveButton = getActivity().findViewById(R.id.saveButton);
+
         Spinner spinner = getActivity().findViewById(R.id.spinnerValue);
 
         hideNavbarWhenKeyboardAppear(navBar, gram);
@@ -72,7 +90,27 @@ public class AboutFragment extends Fragment {
             }
         );
 
-        countButton.setOnClickListener(v -> glc.calcGlycemicalLoad(productsArray, ingredients));
+        countButton.setOnClickListener(v -> {
+            Double index = glc.getGlycemicalLoad(selectedProductsArray, ingredients);
+            glycIndex.setText(String.valueOf(Math.round(index)));
+            Utils.setIndexColor(glycIndex, index);
+        });
+
+        clearButton.setOnClickListener(v -> {
+            ingredients.clear();
+            adapter.notifyDataSetChanged();
+        });
+
+        saveButton.setOnClickListener(v -> {
+            sharedPrefHelper.saveData(sharedPreferences,
+                new Recipe(
+                    dishName.getText().toString(),
+                    Double.valueOf(glycIndex.getText().toString()),
+                    ingredients
+                )
+            );
+        });
+
     }
 
     private void hideNavbarWhenKeyboardAppear(BottomNavigationView navBar, EditText gram) {
@@ -98,15 +136,26 @@ public class AboutFragment extends Fragment {
         button.setOnClickListener(v -> {
 
             long indexOfElement = spinner.getSelectedItemId();
-            String weight = gram.getText().toString();
+            double weight = Double.valueOf(gram.getText().toString());
             String nameOfIngredient = spinner.getSelectedItem().toString();
             String imgUri = productsArray.get((int)indexOfElement).getImgUrl();
 
             Ingredient ingredient = new Ingredient(
-                    imgUri,nameOfIngredient , weight
+                    imgUri,nameOfIngredient,weight
             );
 
+            Product product =
+                    new Product(
+                        productsArray.get((int)indexOfElement).getName(),
+                        productsArray.get((int)indexOfElement).getType(),
+                        productsArray.get((int)indexOfElement).getCarbohydrates(),
+                        productsArray.get((int)indexOfElement).getFibre(),
+                        productsArray.get((int)indexOfElement).getGlycemIndex(),
+                        productsArray.get((int)indexOfElement).getImgUrl()
+                    );
+
             ingredients.add(ingredient);
+            selectedProductsArray.add(product);
             adapter.notifyDataSetChanged();
             gram.setText("");
 

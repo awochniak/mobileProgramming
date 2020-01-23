@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mobileprogramming.R;
+import com.example.mobileprogramming.commons.Utils;
 import com.example.mobileprogramming.model.Product;
 import com.squareup.picasso.Picasso;
 
@@ -39,18 +40,8 @@ public class ProductInfo extends AppCompatActivity {
         index.setText(String.valueOf(product.getGlycemIndex()));
         Picasso.get().load(product.getImgUrl()).into(img);
 
-        setIndexColor(index);
+        Utils.setIndexColor(index, product.getGlycemIndex());
 
-    }
-
-    private void setIndexColor(TextView index) {
-        if(product.getGlycemIndex()<=55){
-            index.setTextColor(Color.GREEN);
-        } else if (product.getGlycemIndex()>=70){
-            index.setTextColor(Color.RED);
-        } else {
-            index.setTextColor(Color.YELLOW);
-        }
     }
 
     private Product getFromExtras() {

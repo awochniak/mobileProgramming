@@ -14,11 +14,11 @@ import java.util.List;
 import androidx.annotation.NonNull;
 
 public class DBHelper {
-    public void getProducts(FirebaseDBCallback callback){
-        System.out.println("weszło");
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ref = database.getReference(Config.PRODUCTS_COLLECTION_NAME);
 
+    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    final DatabaseReference ref = database.getReference(Config.PRODUCTS_COLLECTION_NAME);
+
+    public void getProducts(FirebaseDBCallback callback){
         ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -35,6 +35,10 @@ public class DBHelper {
                 //Log.e("Problem with DB connection");
             }
         });
+    }
+
+    public void addProducts(List<Product> products){
+        products.forEach(product -> ref.push().setValue(product));
     }
 
     public interface FirebaseDBCallback {
