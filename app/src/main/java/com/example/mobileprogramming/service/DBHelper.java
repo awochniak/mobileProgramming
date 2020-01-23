@@ -40,7 +40,9 @@ public class DBHelper {
     public void addProducts(List<Product> products){
         products.forEach(product -> ref.push().setValue(product));
     }
-
+    public void addProduct(Product product){
+       ref.push().setValue(product);
+    }
     public interface FirebaseDBCallback {
         void onCallback(List<Product> products);
     }
