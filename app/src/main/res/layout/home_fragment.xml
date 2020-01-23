@@ -3,10 +3,42 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <Button
-        android:id="@+id/addDb"
+    <WebView
+        android:id="@+id/homeWebView"
         android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </WebView>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:weightSum="3"
         android:layout_height="match_parent"
-        android:text="DODAJ" />
+        android:orientation="vertical"
+        android:id="@+id/loadingRow">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:indeterminateTint="@color/colorPrimary"
+            android:layout_margin="30dp"/>
+
+        <TextView
+            android:id="@+id/loadingText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:text="Trwa wczytywanie zawartości"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
 </RelativeLayout>
