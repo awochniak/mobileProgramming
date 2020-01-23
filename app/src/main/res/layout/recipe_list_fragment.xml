@@ -14,7 +14,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="10sp"
             android:layout_weight="1" />
 
         <ImageView
@@ -60,7 +60,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="50sp" />
+            android:layout_height="10sp" />
 
         <ListView
             android:id="@+id/recipeListView"

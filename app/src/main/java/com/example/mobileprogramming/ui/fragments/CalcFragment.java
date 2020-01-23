@@ -49,6 +49,8 @@ public class CalcFragment extends Fragment {
     private List<Ingredient> ingredients = new ArrayList<>();
     private List<String> spinnerArray = new ArrayList<>();
 
+    private double index = -1;
+
     private IngredientAdapter adapter;
     private ArrayAdapter<String> spinnerAdapter;
 
@@ -102,8 +104,7 @@ public class CalcFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String et = dishName.getText().toString();
-
-                saveButton.setEnabled(!et.isEmpty() && !ingredients.isEmpty());
+                saveButton.setEnabled(!et.isEmpty() && !ingredients.isEmpty() && index != -1 );
             }
 
             @Override
@@ -113,6 +114,20 @@ public class CalcFragment extends Fragment {
             public void afterTextChanged(Editable editable) { }
         });
 
+        glycIndex.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                String et = dishName.getText().toString();
+                saveButton.setEnabled(!et.isEmpty() && !ingredients.isEmpty() && index != -1);
+
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+
+            @Override
+            public void afterTextChanged(Editable editable) { }
+        });
 
         dbHelper.getProducts(
             products -> {
@@ -125,7 +140,7 @@ public class CalcFragment extends Fragment {
         );
 
         countButton.setOnClickListener(v -> {
-            Double index = glc.getGlycemicalLoad(selectedProductsArray, ingredients);
+            index = glc.getGlycemicalLoad(selectedProductsArray, ingredients);
             glycIndex.setText(String.valueOf(Math.round(index)));
             Utils.setIndexColor(glycIndex, index);
         });
@@ -143,6 +158,13 @@ public class CalcFragment extends Fragment {
                     ingredients
                 )
             );
+
+            ingredients.clear();
+            adapter.notifyDataSetChanged();
+            glycIndex.setText("");
+            dishName.setText("");
+
+            Toast.makeText(getContext(), "Poprawnie zapisano danie", Toast.LENGTH_SHORT).show();
         });
 
     }
@@ -211,9 +233,11 @@ public class CalcFragment extends Fragment {
     }
 
     private void setDataForSpinner(Spinner spinner) {
-        spinnerAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, spinnerArray);
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        spinner.setAdapter(spinnerAdapter);
+        if(getContext() != null){
+            spinnerAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, spinnerArray);
+            spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+            spinner.setAdapter(spinnerAdapter);
+        }
     }
 
 }
