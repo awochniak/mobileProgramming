@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import com.example.mobileprogramming.ui.fragments.AboutFragment;
+import com.example.mobileprogramming.ui.fragments.CalcFragment;
 import com.example.mobileprogramming.ui.fragments.AddProductFragment;
 import com.example.mobileprogramming.ui.fragments.HomeFragment;
 import com.example.mobileprogramming.ui.fragments.ListFragment;
@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                             selectedFragment = new ListFragment();
                             break;
                         case R.id.nav_about:
-                            selectedFragment = new AboutFragment();
+                            selectedFragment = new CalcFragment();
                             break;
                         case R.id.nav_recipe_list:
                             selectedFragment = new RecipesFragment();
