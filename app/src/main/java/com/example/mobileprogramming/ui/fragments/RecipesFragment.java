@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.example.mobileprogramming.R;
@@ -37,9 +38,19 @@ public class RecipesFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         ListView listView = getActivity().findViewById(R.id.recipeListView);
+        LinearLayout errorLinearLayout = getActivity().findViewById(R.id.error);
+        LinearLayout successLinearLayout = getActivity().findViewById(R.id.recipeContent);
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Config.SP_TAG, Context.MODE_PRIVATE);
         recipes = helper.loadData(sharedPreferences);
+
+        if(recipes.isEmpty()){
+            errorLinearLayout.setVisibility(View.VISIBLE);
+            successLinearLayout.setVisibility(View.GONE);
+        } else {
+            errorLinearLayout.setVisibility(View.GONE);
+            successLinearLayout.setVisibility(View.VISIBLE);
+        }
 
         RecipesAdapter recipesAdapter = new RecipesAdapter(getContext(), R.layout.recipe_list_fragment_element, recipes);
         listView.setAdapter(recipesAdapter);

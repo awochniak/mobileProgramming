@@ -18,7 +18,8 @@
             android:gravity="center"
             android:text="OBLICZ ŁADUNEK GLIKEMICZNY"
             android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"/>
 
         <Space
             android:layout_width="match_parent"
@@ -35,13 +36,15 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="Produkt:" />
+                android:text="Produkt:"
+                android:textColor="@color/colorPrimary"/>
 
             <Spinner
                 android:id="@+id/spinnerValue"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textColor="@color/colorPrimary"/>
 
         </LinearLayout>
 
@@ -56,7 +59,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="Gramatura:" />
+                android:text="Gramatura:"
+                android:textColor="@color/colorPrimary"/>
 
             <EditText
                 android:focusable="true"
@@ -66,7 +70,10 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="numberDecimal" />
+                android:inputType="numberDecimal"
+                android:backgroundTint="@color/edit_text_colors"
+                android:textColor="@color/colorPrimary"
+                />
 
         </LinearLayout>
 
@@ -75,10 +82,13 @@
             android:layout_height="20sp" />
 
         <Button
+            android:textColor="#FFFFFF"
+
             android:id="@+id/addButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Dodaj do listy" />
+            android:text="Dodaj do listy"
+            android:background="@color/button"/>
 
         <Space
             android:layout_width="match_parent"
@@ -101,17 +111,24 @@
             android:orientation="horizontal">
 
             <Button
+                android:textColor="#FFFFFF"
                 android:id="@+id/clearButton"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="Wyczyść" />
+                android:text="Wyczyść"
+                android:background="@color/button"
+                android:layout_marginRight="15dp"
+                />
 
             <Button
+                android:textColor="#FFFFFF"
                 android:id="@+id/countButton"
                 android:layout_width="228dp"
                 android:layout_height="wrap_content"
-                android:text="Oblicz" />
+                android:text="Oblicz"
+                android:background="@color/button"
+                />
         </LinearLayout>
 
         <Space
@@ -141,7 +158,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="Podaj nazwę dania:" />
+                android:text="Podaj nazwę dania:"
+                android:textColor="@color/colorPrimary"/>
 
             <EditText
                 android:focusable="true"
@@ -151,7 +169,10 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:backgroundTint="@color/edit_text_colors"
+                android:textColor="@color/colorPrimary"
+                />
         </LinearLayout>
 
         <Space
@@ -159,10 +180,12 @@
             android:layout_height="20sp" />
 
         <Button
+            android:textColor="#FFFFFF"
             android:id="@+id/saveButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Zapisz danie" />
+            android:text="Zapisz danie"
+            android:background="@color/button"/>
 
     </LinearLayout>
 </ScrollView>

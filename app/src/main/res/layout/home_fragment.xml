@@ -37,6 +37,7 @@
             android:layout_weight="1"
             android:gravity="center_horizontal"
             android:text="Trwa wczytywanie zawartości"
+            android:textColor="@color/colorPrimary"
             android:textSize="20sp" />
 
     </LinearLayout>

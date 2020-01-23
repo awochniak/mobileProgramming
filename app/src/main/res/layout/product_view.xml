@@ -17,6 +17,7 @@
         android:text="Tytuł"
         android:textStyle="bold"
         android:textSize="30sp"
+        android:textColor="@color/colorPrimary"
         />
 
     <Space
@@ -51,6 +52,7 @@
                 android:gravity="center"
                 android:text="Nazwa produktu"
                 android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
                 />
 
             <TextView
@@ -60,6 +62,7 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="nazwa"
+                android:textColor="@color/colorPrimary"
                 />
 
         </LinearLayout>
@@ -77,6 +80,7 @@
                 android:gravity="center"
                 android:text="Typ"
                 android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
                 />
 
             <TextView
@@ -85,7 +89,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="typ" />
+                android:text="typ"
+                android:textColor="@color/colorPrimary"/>
 
         </LinearLayout>
 
@@ -102,6 +107,7 @@
                 android:gravity="center"
                 android:text="Węglowodany"
                 android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
                 />
 
             <TextView
@@ -110,7 +116,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="węgle" />
+                android:text="węgle"
+                android:textColor="@color/colorPrimary"/>
 
         </LinearLayout>
 
@@ -126,7 +133,8 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:textStyle="bold"
-                android:text="Błonnik" />
+                android:text="Błonnik"
+                android:textColor="@color/colorPrimary"/>
 
             <TextView
                 android:id="@+id/fibreValue"
@@ -134,7 +142,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="błonnik" />
+                android:text="błonnik"
+                android:textColor="@color/colorPrimary"/>
 
         </LinearLayout>
 
@@ -153,7 +162,8 @@
                 android:layout_height="50dp"
                 android:gravity="center"
                 android:textStyle="bold"
-                android:text="Indeks glikemiczny" />
+                android:text="Indeks glikemiczny"
+                android:textColor="@color/colorPrimary"/>
 
             <TextView
                 android:id="@+id/indexValue"
@@ -162,7 +172,8 @@
                 android:gravity="center"
                 android:textStyle="bold"
                 android:textSize="30sp"
-                android:text="indeks glikemiczny" />
+                android:text="indeks glikemiczny"
+                android:textColor="@color/colorPrimary"/>
 
         </LinearLayout>
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.example.mobileprogramming.R;
@@ -30,9 +31,22 @@ public class ListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         ListView listView = view.findViewById(R.id.listView);
 
+        LinearLayout errorLinearLayout = view.findViewById(R.id.listError);
+        LinearLayout successLinearLayout = view.findViewById(R.id.listContent);
+
+
         dbHelper.getProducts(products -> {
+
+            if(products.isEmpty()){
+                errorLinearLayout.setVisibility(View.VISIBLE);
+                successLinearLayout.setVisibility(View.GONE);
+            } else {
+                errorLinearLayout.setVisibility(View.GONE);
+                successLinearLayout.setVisibility(View.VISIBLE);
+            }
+
             if(getContext()!= null) {
-                ProductsAdapter adapter = new ProductsAdapter(getContext(), R.layout.list_element, products);
+                ProductsAdapter adapter = new ProductsAdapter(getContext(), R.layout.list_fragment_element, products);
                 listView.setAdapter(adapter);
                 listView.setOnItemClickListener((adapterView, view1, i, l) -> {
                             Intent intent = new Intent(getActivity(), ProductInfo.class);

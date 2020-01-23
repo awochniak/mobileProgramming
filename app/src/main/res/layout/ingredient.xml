@@ -16,19 +16,23 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:gravity="center"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            />
 
         <TextView
             android:id="@+id/ingrTitle"
             android:layout_width="246dp"
             android:layout_height="50dp"
-            android:gravity="center" />
+            android:gravity="center"
+            android:textColor="@color/colorPrimary"/>
 
         <TextView
             android:id="@+id/ingrWeight"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:gravity="center" />
+            android:gravity="center"
+            android:textColor="@color/colorPrimary"/>
+
     </LinearLayout>
 
 </LinearLayout>
